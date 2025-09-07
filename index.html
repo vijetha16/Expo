@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobSphere - Connect Talent</title>
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --secondary: #4f46e5;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --gray: #64748b;
+        --success: #10b981;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+    }
+    
+    * {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    body {background:#0f172a; color:#cbd5e1; line-height:1.6;}
+
+    header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
+        color:white; 
+        text-align:center; 
+        padding:60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,138.7C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+        background-size: cover;
+        background-position: center;
+    }
+    header h1 {
+        font-size:3em; 
+        margin-bottom:10px;
+        position: relative;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    header p {
+        font-size:1.2em;
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    nav {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        background:var(--dark);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+        color:var(--light);
+        text-decoration:none;
+        padding:15px 25px;
+        display:block;
+        transition: var(--transition);
+        font-weight: 500;
+    }
+    nav a:hover {
+        background:var(--primary);
+    }
+    nav a.active {
+        background:var(--primary);
+        box-shadow: inset 0 -4px 0 var(--light);
+    }
+
+    section {
+        padding:80px 20px;
+        max-width:1200px;
+        margin:auto;
+        display: none;
+    }
+    section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h2 {
+        color:var(--primary);
+        text-align:center;
+        margin-bottom:30px;
+        font-size: 2.2rem;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 2px;
+    }
+
+    .card {
+        background:var(--light);
+        color: var(--dark);
+        border-radius:12px;
+        padding:30px;
+        margin:20px 0;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-group {margin-bottom:20px;}
+    label {
+        display:block;
+        margin-bottom:8px;
+        font-weight:600;
+        color: var(--dark);
+    }
+    input, textarea, select {
+        width:100%;
+        padding:12px 15px;
+        border:1px solid #cbd5e1;
+        border-radius:8px;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn {
+        background:var(--primary);
+        color:white;
+        border:none;
+        padding:12px 25px;
+        border-radius:8px;
+        cursor:pointer;
+        font-size:1rem;
+        font-weight: 600;
+        margin-top:10px;
+        display:inline-block;
+        text-decoration:none;
+        text-align:center;
+        transition: var(--transition);
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+    }
+    .btn:hover {
+        background:var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+    }
+    .btn-secondary {
+        background: var(--gray);
+    }
+    .btn-secondary:hover {
+        background: #475569;
+    }
+
+    .btn-container {
+        text-align:center;
+        margin-top:30px;
+    }
+    .btn-container .btn {
+        margin: 0 10px;
+    }
+
+    /* Job Listings Grid */
+    .job-list {
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+        gap:25px;
+    }
+    .job-card {
+        background: var(--light);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+    }
+    .job-card:hover {
+        transform: translateY(-5px);
+    }
+    .job-card-header {
+        background: var(--primary);
+        color: white;
+        padding: 20px;
+    }
+    .job-card-body {
+        padding: 20px;
+    }
+    .job-card-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #e2e8f0;
+        text-align: center;
+    }
+    .job-tag {
+        display: inline-block;
+        background: #e0f2fe;
+        color: var(--primary);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin: 5px 5px 5px 0;
+    }
+
+    /* Team Members Grid */
+    .team-grid {
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+        gap:30px;
+        justify-items:center;
+    }
+    .team-member {
+        background:var(--light);
+        border-radius:12px;
+        padding:25px;
+        text-align:center;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
+    }
+    .team-member:hover {
+        transform: translateY(-5px);
+    }
+    .team-member img {
+        width:150px;
+        height:150px;
+        border-radius:50%;
+        margin-bottom:20px;
+        object-fit:cover;
+        border:4px solid var(--primary);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .team-member h3 {
+        color: var(--dark);
+        margin-bottom: 10px;
+    }
+    .team-member p {
+        color: var(--gray);
+        margin-bottom: 15px;
+    }
+    .skills span {
+        display:inline-block;
+        background:var(--primary);
+        color:white;
+        padding:5px 12px;
+        border-radius:20px;
+        margin:4px;
+        font-size:0.85rem;
+    }
+    .profile-btn {
+        margin-top:15px;
+        display:inline-block;
+        padding:10px 20px;
+        background:var(--success);
+        color:white;
+        border-radius:6px;
+        text-decoration:none;
+        transition: var(--transition);
+        font-weight: 600;
+    }
+    .profile-btn:hover {
+        background:#0d9669;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Hidden Sections (Privacy, Terms, Profiles) */
+    .section-hidden {
+        display:none;
+        background:#f9f9f9;
+        max-width:800px;
+        margin:40px auto;
+        padding:40px;
+        border-radius:12px;
+        box-shadow: var(--card-shadow);
+        text-align:left;
+        color: var(--dark);
+    }
+    .section-hidden h1, .section-hidden h2 {
+        text-align:center;
+        color: var(--primary);
+    }
+    .back-home {
+        display:block;
+        text-align:center;
+        margin-top:30px;
+        background:var(--primary);
+        color:white;
+        padding:12px 25px;
+        border-radius:6px;
+        text-decoration:none;
+        width:150px;
+        margin-left:auto;
+        margin-right:auto;
+        transition: var(--transition);
+    }
+    .back-home:hover {
+        background:var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Footer */
+    footer {
+        background:var(--dark);
+        color:white;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:15px;
+        padding:40px 20px;
+        margin-top: 60px;
+    }
+    .footer-top {
+        display:flex;
+        align-items:center;
+        gap:15px;
+        margin-bottom: 15px;
+    }
+    .footer-top img {
+        width:50px;
+        height:50px;
+        object-fit:contain;
+    }
+    .footer-top .website-name {
+        font-size:1.8rem;
+        font-weight:bold;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .footer-links a {
+        color:white;
+        text-decoration:none;
+        margin:0 12px;
+        transition: var(--transition);
+    }
+    .footer-links a:hover {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+    .copyright {
+        margin-top: 15px;
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    /* Show targeted section */
+    #privacy-policy:target, 
+    #terms-conditions:target, 
+    #profile-charan:target, 
+    #profile-durga:target, 
+    #profile-akshitha:target, 
+    #profile-vijetha:target {
+        display:block;
+    }
+    #privacy-policy:target ~ #main-content, 
+    #terms-conditions:target ~ #main-content, 
+    #profile-charan:target ~ #main-content, 
+    #profile-durga:target ~ #main-content, 
+    #profile-akshitha:target ~ #main-content, 
+    #profile-vijetha:target ~ #main-content {
+        display:none;
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+        .team-grid {
+            grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+        }
+        .job-list {
+            grid-template-columns:1fr;
+        }
+        header h1 {
+            font-size: 2.2rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+        }
+    }
+    @media(max-width:480px){
+        .team-grid {
+            grid-template-columns:1fr;
+        }
+        .job-list {
+            grid-template-columns:1fr;
+        }
+        nav a {
+            padding: 12px 15px;
+            font-size: 0.9rem;
+        }
+        header {
+            padding: 40px 20px;
+        }
+        header h1 {
+            font-size: 1.8rem;
+        }
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>JobSphere</h1>
+  <p>Connect Talent with Opportunity - Your career journey starts here</p>
+</header>
+
+<nav>
+  <a href="#home" class="nav-link active" data-section="home">Home</a>
+  <a href="#jobs" class="nav-link" data-section="jobs">Jobs</a>
+  <a href="#recruiter" class="nav-link" data-section="recruiter">Recruiter</a>
+  <a href="#team" class="nav-link" data-section="team">Team</a>
+  <a href="#profile" class="nav-link" data-section="profile">Profile</a>
+  <a href="#resume" class="nav-link" data-section="resume">Resume Builder</a>
+  <a href="#about" class="nav-link" data-section="about">About</a>
+  <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+</nav>
+
+<!-- Hidden Sections -->
+<section id="privacy-policy" class="section-hidden">
+<h1>Privacy Policy</h1>
+<p>At JobSphere, we value your privacy. This Privacy Policy explains what information we collect, how we use it, and how we protect it.</p>
+<h2>Information We Collect</h2>
+<p>We may collect your name, email, resume, and other personal information when you register on our platform.</p>
+<h2>How We Use Your Information</h2>
+<p>We use your information to connect you with potential employers, send job alerts, and improve our services.</p>
+<h2>Data Protection</h2>
+<p>We implement security measures to protect your data from unauthorized access or disclosure.</p>
+<a href="#home" class="back-home">&#x2B05; Go Back</a>
+</section>
+
+<section id="terms-conditions" class="section-hidden">
+<h1>Terms & Conditions</h1>
+<p>Welcome to JobSphere! By using our website, you agree to the following terms and conditions:</p>
+<h2>User Responsibilities</h2>
+<p>Users must provide accurate information and are responsible for their accounts and activity on the platform.</p>
+<h2>Job Listings</h2>
+<p>JobSphere provides listings from employers but is not responsible for any discrepancies in job postings.</p>
+<h2>Limitation of Liability</h2>
+<p>We are not liable for any losses or damages resulting from the use of this website.</p>
+<a href="#home" class="back-home">&#x2B05; Go Back</a>
+</section>
+
+<section id="profile-charan" class="section-hidden">
+<h1>Charan</h1>
+<img src="https://i.pinimg.com/736x/37/79/fd/3779fd1397f8d93ac80f286a876ddc58.jpg" alt="Charan" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 20px auto; border: 4px solid var(--primary);">
+<h2>Team Leader & Full Stack Developer</h2>
+<p>Charan leads our development team with over 5 years of experience in web technologies. He specializes in creating seamless user experiences and robust backend systems.</p>
+<p><strong>Skills:</strong> HTML, CSS, JavaScript, React, Node.js, MongoDB, Project Management</p>
+<p><strong>Education:</strong> Master's in Computer Science</p>
+<p><strong>Contact:</strong> charan@jobsphere.example.com</p>
+<a href="#home" class="back-home">Back to Home</a>
+</section>
+
+<section id="profile-durga" class="section-hidden">
+<h1>Durga Prasad</h1>
+<img src="https://img.freepik.com/premium-photo/cartoon-boy-portrait_1410957-55148.jpg?semt=ais_hybrid&w=740&q=80" alt="Durga Prasad" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 20px auto; border: 4px solid var(--primary);">
+<h2>Frontend Developer</h2>
+<p>Durga is passionate about creating responsive and accessible web interfaces. He ensures our platform works flawlessly across all devices.</p>
+<p><strong>Skills:</strong> HTML, CSS, JavaScript, React, Responsive Design, UI/UX Principles</p>
+<p><strong>Education:</strong> Bachelor's in Information Technology</p>
+<p><strong>Contact:</strong> durga@jobsphere.example.com</p>
+<a href="#home" class="back-home">Back to Home</a>
+</section>
+
+<section id="profile-akshitha" class="section-hidden">
+<h1>Akshitha</h1>
+<img src="https://img.freepik.com/premium-photo/stylish-3d-cartoon-girl-with-brown-hair-flaunts-her-smile-city-portrait_1283595-28209.jpg" alt="Akshitha" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 20px auto; border: 4px solid var(--primary);">
+<h2>Backend Developer</h2>
+<p>Akshitha builds the core functionality that powers JobSphere. She focuses on creating efficient, secure, and scalable server-side applications.</p>
+<p><strong>Skills:</strong> Node.js, PHP, MySQL, Python, API Development, Database Design</p>
+<p><strong>Education:</strong> Master's in Software Engineering</p>
+<p><strong>Contact:</strong> akshitha@jobsphere.example.com</p>
+<a href="#home" class="back-home">Back to Home</a>
+</section>
+
+<section id="profile-vijetha" class="section-hidden">
+<h1>Vijetha</h1>
+<img src="https://t4.ftcdn.net/jpg/12/66/42/61/360_F_1266426178_aadAW4BCtCx7DNq4fMSzEQEfq0MZ1brK.jpg" alt="Vijetha" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 20px auto; border: 4px solid var(--primary);">
+<h2>UX/UI Designer</h2>
+<p>Vijetha creates intuitive and visually appealing interfaces that make job hunting and recruitment a pleasant experience.</p>
+<p><strong>Skills:</strong> Figma, Adobe XD, HTML, CSS, User Research, Prototyping</p>
+<p><strong>Education:</strong> Bachelor's in Design</p>
+<p><strong>Contact:</strong> vijetha@jobsphere.example.com</p>
+<a href="#home" class="back-home">Back to Home</a>
+</section>
+
+<!-- Main Content -->
+<div id="main-content">
+
+<!-- Home -->
+<section id="home" class="active">
+<h2>Find Your Dream Job</h2>
+<p style="text-align:center; max-width: 800px; margin: 0 auto 30px;">JobSphere connects talented professionals with top companies worldwide. Whether you're looking for your next career move or need to find the perfect candidate, we're here to help.</p>
+<div class="btn-container">
+  <a class="btn" href="#jobs">Find Jobs</a>
+  <a class="btn btn-secondary" href="#recruiter">Post Jobs</a>
+</div>
+
+<div class="card" style="margin-top: 40px;">
+  <h3 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Why Choose JobSphere?</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+    <div style="text-align: center;">
+      <h4 style="color: var(--primary); margin-bottom: 10px;"> &#128260; Quick Matching</h4>
+      <p>Our AI-powered algorithm matches you with the perfect job opportunities based on your skills and preferences.</p>
+    </div>
+    <div style="text-align: center;">
+      <h4 style="color: var(--primary); margin-bottom: 10px;"> &#128202; Smart Analytics</h4>
+      <p>Track your application status and get insights to improve your profile visibility to recruiters.</p>
+    </div>
+    <div style="text-align: center;">
+      <h4 style="color: var(--primary); margin-bottom: 10px;"> &#128274; Privacy Focused</h4>
+      <p>Your data is secure with us. Control who sees your profile and contact information.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Jobs -->
+<section id="jobs">
+<h2>Latest Job Opportunities</h2>
+<p style="text-align: center; margin-bottom: 30px;">Browse through our curated list of available positions</p>
+
+<div class="job-list">
+  <div class="job-card">
+    <div class="job-card-header">
+      <h3>Software Engineer</h3>
+      <p>Company: ABC Tech</p>
+    </div>
+    <div class="job-card-body">
+      <p><strong>Location:</strong> Hyderabad, India</p>
+      <p><strong>Experience:</strong> 2-5 years</p>
+      <p><strong>Salary:</strong> ₹8-15 LPA</p>
+      <div class="job-tags">
+        <span class="job-tag">JavaScript</span>
+        <span class="job-tag">React</span>
+        <span class="job-tag">Node.js</span>
+      </div>
+    </div>
+    <div class="job-card-footer">
+      <button class="btn">Apply Now</button>
+    </div>
+  </div>
+
+  <div class="job-card">
+    <div class="job-card-header">
+      <h3>UI/UX Designer</h3>
+      <p>Company: Creative Minds</p>
+    </div>
+    <div class="job-card-body">
+      <p><strong>Location:</strong> Bangalore, India</p>
+      <p><strong>Experience:</strong> 3-6 years</p>
+      <p><strong>Salary:</strong> ₹10-18 LPA</p>
+      <div class="job-tags">
+        <span class="job-tag">Figma</span>
+        <span class="job-tag">Adobe XD</span>
+        <span class="job-tag">Prototyping</span>
+      </div>
+    </div>
+    <div class="job-card-footer">
+      <button class="btn">Apply Now</button>
+    </div>
+  </div>
+
+  <div class="job-card">
+    <div class="job-card-header">
+      <h3>Data Analyst</h3>
+      <p>Company: DataCorp</p>
+    </div>
+    <div class="job-card-body">
+      <p><strong>Location:</strong> Chennai, India</p>
+      <p><strong>Experience:</strong> 2-4 years</p>
+      <p><strong>Salary:</strong> ₹7-12 LPA</p>
+      <div class="job-tags">
+        <span class="job-tag">Python</span>
+        <span class="job-tag">SQL</span>
+        <span class="job-tag">Tableau</span>
+      </div>
+    </div>
+    <div class="job-card-footer">
+      <button class="btn">Apply Now</button>
+    </div>
+  </div>
+</div>
+
+<div class="btn-container">
+  <a class="btn" href="#">View All Jobs</a>
+</div>
+</section>
+
+<!-- Recruiter -->
+<section id="recruiter">
+<h2>Post a Job Opening</h2>
+<p style="text-align: center; margin-bottom: 30px;">Reach thousands of qualified candidates with your job posting</p>
+
+<div class="card">
+<form>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+      <label>Job Title *</label>
+      <input type="text" placeholder="e.g. Senior Frontend Developer" required>
+    </div>
+    <div class="form-group">
+      <label>Company Name *</label>
+      <input type="text" placeholder="Your company name" required>
+    </div>
+  </div>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+      <label>Location *</label>
+      <input type="text" placeholder="e.g. Hyderabad, India" required>
+    </div>
+    <div class="form-group">
+      <label>Salary Range</label>
+      <input type="text" placeholder="e.g. ₹10-15 LPA">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Job Description *</label>
+    <textarea placeholder="Describe the role, responsibilities, and requirements..." rows="5" required></textarea>
+  </div>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+      <label>Job Type</label>
+      <select>
+        <option>Full-time</option>
+        <option>Part-time</option>
+        <option>Contract</option>
+        <option>Internship</option>
+        <option>Remote</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Experience Level</label>
+      <select>
+        <option>Entry Level</option>
+        <option>Mid Level</option>
+        <option>Senior Level</option>
+        <option>Executive</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Required Skills (comma separated)</label>
+    <input type="text" placeholder="e.g. JavaScript, React, Node.js">
+  </div>
+  
+  <div style="text-align: center; margin-top: 20px;">
+    <button class="btn" type="submit">Post Job</button>
+  </div>
+</form>
+</div>
+</section>
+
+<!-- Team -->
+<section id="team">
+<h2>Meet Our Team</h2>
+<p style="text-align: center; margin-bottom: 30px;">The talented individuals behind JobSphere</p>
+
+<div class="team-grid">
+  <div class="team-member">
+    <img src="https://i.pinimg.com/736x/37/79/fd/3779fd1397f8d93ac80f286a876ddc58.jpg" alt="Charan">
+    <h3>Charan</h3>
+    <p>Team Lead & Full Stack Developer</p>
+    <div class="skills">
+      <span>HTML</span><span>CSS</span><span>JS</span><span>React</span><span>Node.js</span>
+    </div>
+    <a href="#profile-charan" class="profile-btn">View Profile</a>
+  </div>
+  
+  <div class="team-member">
+    <img src="https://img.freepik.com/premium-photo/cartoon-boy-portrait_1410957-55148.jpg?semt=ais_hybrid&w=740&q=80" alt="Durga Prasad">
+    <h3>Durga Prasad</h3>
+    <p>Frontend Developer</p>
+    <div class="skills">
+      <span>HTML</span><span>CSS</span><span>JS</span><span>React</span><span>UI/UX</span>
+    </div>
+    <a href="#profile-durga" class="profile-btn">View Profile</a>
+  </div>
+  
+  <div class="team-member">
+    <img src="https://img.freepik.com/premium-photo/stylish-3d-cartoon-girl-with-brown-hair-flaunts-her-smile-city-portrait_1283595-28209.jpg" alt="Akshitha">
+    <h3>Akshitha</h3>
+    <p>Backend Developer</p>
+    <div class="skills">
+      <span>Node.js</span><span>PHP</span><span>MySQL</span><span>Python</span><span>API</span>
+    </div>
+    <a href="#profile-akshitha" class="profile-btn">View Profile</a>
+  </div>
+  
+  <div class="team-member">
+    <img src="https://t4.ftcdn.net/jpg/12/66/42/61/360_F_1266426178_aadAW4BCtCx7DNq4fMSzEQEfq0MZ1brK.jpg" alt="Vijetha">
+    <h3>Vijetha</h3>
+    <p>UX/UI Designer</p>
+    <div class="skills">
+      <span>Figma</span><span>Adobe XD</span><span>HTML</span><span>CSS</span><span>Prototyping</span>
+    </div>
+    <a href="#profile-vijetha" class="profile-btn">View Profile</a>
+  </div>
+</div>
+</section>
+
+<!-- Profile -->
+<section id="profile">
+<h2>Your Profile</h2>
+<p style="text-align: center; margin-bottom: 30px;">Manage your professional profile and preferences</p>
+
+<div class="card">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <div style="width: 120px; height: 120px; border-radius: 50%; background: #ddd; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #666;">
+      &#128100;
+    </div>
+    <button class="btn" style="margin-top: 15px; background: var(--gray);">Upload Photo</button>
+  </div>
+  
+  <form>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label>First Name *</label>
+        <input type="text" placeholder="Your first name" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name *</label>
+        <input type="text" placeholder="Your last name" required>
+      </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Mobile *</label>
+        <input type="text" placeholder="Your mobile number" required>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Professional Title</label>
+      <input type="text" placeholder="e.g. Frontend Developer">
+    </div>
+    
+    <div class="form-group">
+      <label>Summary</label>
+      <textarea placeholder="Brief professional summary..." rows="3"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Skills (comma separated)</label>
+      <input type="text" placeholder="e.g. JavaScript, React, CSS">
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label>Experience Level</label>
+        <select>
+          <option>Select</option>
+          <option>Entry Level (0-2 years)</option>
+          <option>Mid Level (2-5 years)</option>
+          <option>Senior Level (5+ years)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Education</label>
+        <select>
+          <option>Select</option>
+          <option>High School</option>
+          <option>Associate Degree</option>
+          <option>Bachelor's Degree</option>
+          <option>Master's Degree</option>
+          <option>Doctorate</option>
+        </select>
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+      <button class="btn" type="submit">Save Profile</button>
+    </div>
+  </form>
+</div>
+</section>
+
+<!-- Resume Builder -->
+<section id="resume">
+<h2>Resume Builder</h2>
+<p style="text-align: center; margin-bottom: 30px;">Create a professional resume in minutes</p>
+
+<div class="card">
+  <form>
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Personal Information</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label>Professional Title</label>
+        <input type="text" placeholder="e.g. Software Engineer">
+      </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="text" placeholder="Your phone number" required>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Address</label>
+      <input type="text" placeholder="Your location">
+    </div>
+    
+    <div class="form-group">
+      <label>Professional Summary</label>
+      <textarea placeholder="Brief summary of your professional background..." rows="3"></textarea>
+    </div>
+    
+    <h3 style="color: var(--primary); margin-bottom: 20px; margin-top: 30px;">Education</h3>
+    <div class="form-group">
+      <label>Education History</label>
+      <textarea placeholder="Degree, Institution, Year..." rows="3"></textarea>
+    </div>
+    
+    <h3 style="color: var(--primary); margin-bottom: 20px; margin-top: 30px;">Experience</h3>
+    <div class="form-group">
+      <label>Work Experience</label>
+      <textarea placeholder="Position, Company, Duration, Responsibilities..." rows="4"></textarea>
+    </div>
+    
+    <h3 style="color: var(--primary); margin-bottom: 20px; margin-top: 30px;">Skills</h3>
+    <div class="form-group">
+      <label>Skills & Expertise</label>
+      <textarea placeholder="List your key skills..." rows="3"></textarea>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+      <button class="btn" type="submit">Generate Resume</button>
+      <button class="btn btn-secondary" type="button" style="margin-left: 10px;">Download PDF</button>
+    </div>
+  </form>
+</div>
+</section>
+
+<!-- About -->
+<section id="about">
+<h2>About JobSphere</h2>
+<p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">JobSphere is revolutionizing the way job seekers and employers connect. Our platform uses advanced matching algorithms to create meaningful career connections.</p>
+
+<div class="card">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+    <div>
+      <h3 style="color: var(--primary); margin-bottom: 15px;">Our Mission</h3>
+      <p>To create a seamless, efficient, and transparent job market where talent meets opportunity without barriers.</p>
+    </div>
+    <div>
+      <h3 style="color: var(--primary); margin-bottom: 15px;">Our Vision</h3>
+      <p>To become the world's most trusted career platform, empowering professionals and organizations to achieve their full potential.</p>
+    </div>
+  </div>
+  
+  <div style="margin-top: 30px;">
+    <h3 style="color: var(--primary); margin-bottom: 15px; text-align: center;">Key Statistics</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+      <div>
+        <h4 style="font-size: 2rem; color: var(--primary);">50,000+</h4>
+        <p>Active Job Seekers</p>
+      </div>
+      <div>
+        <h4 style="font-size: 2rem; color: var(--primary);">5,000+</h4>
+        <p>Companies</p>
+      </div>
+      <div>
+        <h4 style="font-size: 2rem; color: var(--primary);">30,000+</h4>
+        <p>Successful Matches</p>
+      </div>
+      <div>
+        <h4 style="font-size: 2rem; color: var(--primary);">95%</h4>
+        <p>Satisfaction Rate</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+<h2>Get In Touch</h2>
+<p style="text-align: center; margin-bottom: 30px;">Have questions? We'd love to hear from you</p>
+
+<div class="card">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+    <div>
+      <h3 style="color: var(--primary); margin-bottom: 20px;">Contact Information</h3>
+      <div style="margin-bottom: 25px;">
+        <h4 style="color: var(--dark); margin-bottom: 5px;"> &#128205; Address</h4>
+        <p>123 Tech Park, Innovation Road, Hyderabad, Telangana 500081</p>
+      </div>
+      <div style="margin-bottom: 25px;">
+        <h4 style="color: var(--dark); margin-bottom: 5px;"> &#128222; Phone</h4>
+        <p>+91 9876543210</p>
+      </div>
+      <div style="margin-bottom: 25px;">
+        <h4 style="color: var(--dark); margin-bottom: 5px;"> &#65039; Email</h4>
+        <p>info@jobsphere.example.com</p>
+      </div>
+      <div>
+        <h4 style="color: var(--dark); margin-bottom: 10px;"> &#127760; Social Media</h4>
+        <div style="display: flex; gap: 15px;">
+          <a href="#" style="color: var(--primary); font-size: 1.5rem;">&#128241;</a>
+          <a href="#" style="color: var(--primary); font-size: 1.5rem;">&#128187;</a>
+          <a href="#" style="color: var(--primary); font-size: 1.5rem;">&#128248;</a>
+          <a href="#" style="color: var(--primary); font-size: 1.5rem;">&#128038;</a>
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <form>
+        <div class="form-group">
+          <label>Your Name *</label>
+          <input type="text" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label>Your Email *</label>
+          <input type="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="What is this regarding?">
+        </div>
+        <div class="form-group">
+          <label>Message *</label>
+          <textarea placeholder="Enter your message" rows="5" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-top">
+        <img src="https://cdn-icons-png.flaticon.com/512/8915/8915863.png" alt="JobSphere Logo">
+        <div class="website-name">JobSphere</div>
+    </div>
+    <div class="footer-links">
+        <a href="#privacy-policy">Privacy Policy</a> | 
+        <a href="#terms-conditions">Terms & Conditions</a>
+    </div>
+    <div class="copyright">
+        &copy; 2023 JobSphere. All rights reserved.
+    </div>
+</footer>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Add click event listeners to each navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all sections
+                const sections = document.querySelectorAll('section');
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Show the targeted section
+                const targetSection = document.querySelector(this.getAttribute('href'));
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    window.scrollTo(0, 0);
+                }
+            });
+        });
+        
+        // Show home section by default
+        document.getElementById('home').classList.add('active');
+    });
+</script>
+
+</body>
+</html>
